@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test layui i18n</title>
+    <link href="../layui/css/layui.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- 你的 HTML 代码 -->
+<button onclick="changeLanguage('zh')">简体中文</button>
+<button onclick="changeLanguage('en')">English</button>
+
+<button onclick="myfunction()">Test</button>
+
+<script src="../layui/layui.js"></script>
+<script>
+    //config的设置是全局的
+    layui.config({
+        base: '/res/js/'
+    }).extend({ //设定模块别名
+        i18np: 'i18np'
+    });
+
+    //使用拓展模块
+    layui.use(['jquery', 'i18np'], function(){
+        var i18np = layui.i18np;
+
+        var language = localStorage.getItem('language');
+        window.getprop=function(lan){
+            return i18np.prop(lan);
+        }
+        window.changeLanguage=function(lan){
+            i18np.changeLanguage(lan);
+        }
+        i18np.load(language);
+
+        console.log('Test i18n:', getprop('haha'))
+    });
+
+    function myfunction()
+    {
+        let div = document.createElement("div")
+        let p = document.createElement("p")
+        div.append(getprop('haha'), p)
+        document.body.appendChild(div);
+    }
+</script>
+</body>
+</html>
